@@ -4,7 +4,7 @@ import { Post } from "types/Post";
 
 
 
-export async function getPostsWithoutDetails():Promise<Partial<Post>> {
+export async function getPostsWithoutDetails():Promise<Partial<Post>[]> {
   const client = createClient({
     projectId,
     apiVersion,
