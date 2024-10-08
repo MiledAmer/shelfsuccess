@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
 import { Button } from "~/components/ui/button"
 import { getPostsWithoutDetails } from '~/sanity/sanity-utils'
-import { postType } from '~/sanity/schemaTypes/postType'
 import { Post } from 'types/Post'
 
 export default async function ResponsiveBlogCards() {

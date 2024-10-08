@@ -1,7 +1,6 @@
-import { createClient, groq } from "next-sanity";
-import { apiVersion, dataset, projectId } from "~/sanity/env";
+import { groq } from "next-sanity";
 import { Post } from "types/Post";
-import client from "./client";
+import { client } from "~/lib/sanity";
 
 export async function getPostsWithoutDetails(): Promise<Partial<Post>[]> {
   return await client.fetch(
