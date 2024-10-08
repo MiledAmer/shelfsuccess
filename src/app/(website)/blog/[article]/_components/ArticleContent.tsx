@@ -29,6 +29,26 @@ export const ptComponents = {
       );
     },
   },
+  block: {
+    h1: ({ children }: any) => (
+      <h1 className="text-4xl font-bold">{children}</h1>
+    ),
+    h2: ({ children }: any) => (
+      <h2 className="text-3xl font-semibold">{children}</h2>
+    ),
+    h3: ({ children }: any) => (
+      <h3 className="text-2xl font-medium">{children}</h3>
+    ),
+    h4: ({ children }: any) => (
+      <h4 className="text-xl font-medium">{children}</h4>
+    ),
+    blockquote: ({ children }: any) => (
+      <blockquote className="border-l-4 pl-4 italic text-gray-600">
+        {children}
+      </blockquote>
+    ),
+    normal: ({ children }: any) => <p className="text-base">{children}</p>, // Customize 'p' if needed
+  },
 };
 
 export default function ArticleContent({ data }: { data: Post }) {
@@ -206,48 +226,6 @@ export default function ArticleContent({ data }: { data: Post }) {
             >
               Save this article
               <div className="tooltip-arrow" data-popper-arrow></div>
-            </div>
-            <button
-              id="dropdownMenuIconHorizontalButton"
-              data-dropdown-toggle="dropdownDotsHorizontal"
-              className="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-50 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              type="button"
-            >
-              <svg
-                className="h-5 w-5 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 16 3"
-              >
-                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-              </svg>
-            </button>
-            <div
-              id="dropdownDotsHorizontal"
-              className="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
-            >
-              <ul
-                className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                aria-labelledby="dropdownMenuIconHorizontalButton"
-              >
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Add to collection
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >
-                    Report
-                  </a>
-                </li>
-              </ul>
             </div>
           </div>
         </aside>
