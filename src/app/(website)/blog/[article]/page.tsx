@@ -16,7 +16,7 @@ export default async function HomePage({ params }: { params: propType }) {
   return (
     <>
       <main className="bg-white pb-16 antialiased dark:bg-gray-900 lg:pb-24">
-        <ArticleHeader />
+        <ArticleHeader title={data.title} backgroundImageUrl={data.mainImage} />
         <div className="relative z-20 -m-36 mx-4 flex max-w-screen-xl justify-between rounded bg-white p-6 dark:bg-gray-800 xl:-m-32 xl:mx-auto xl:p-9">
           <ArticleContent data={data} />
           <ArticleSideBar />

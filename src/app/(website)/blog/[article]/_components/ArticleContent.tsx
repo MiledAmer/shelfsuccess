@@ -3,7 +3,6 @@ import { format } from "date-fns";
 import { PortableText } from "@portabletext/react";
 import { ImageValue, urlFor } from "~/sanity/sanity-utils";
 
-
 export const ptComponents = {
   types: {
     image: ({ value }: { value: ImageValue }) => {
@@ -32,9 +31,7 @@ export const ptComponents = {
   },
 };
 
-
 export default function ArticleContent({ data }: { data: Post }) {
-  console.log("the content of the post:", data);
   return (
     <article className="format format-sm sm:format-base lg:format-lg format-blue dark:format-invert w-full max-w-none xl:w-[828px]">
       <div className="flex flex-col justify-between lg:flex-row lg:items-center">

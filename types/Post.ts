@@ -8,7 +8,7 @@ export type Post = {
   _createdAt: Date;
   slug: string;
   author: Partial<Author>; 
-  mainImage?: string; 
+  mainImage: string; 
   categories?: Category[]; 
   publishedAt?: string; 
   body: BlockContent[]; 
