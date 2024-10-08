@@ -10,6 +10,7 @@ export async function getPostsWithoutDetails(): Promise<Partial<Post>[]> {
         _id, 
         _createdAt, 
         title,
+        description,
         "slug": slug.current,
         "mainImage": mainImage.asset->url
     }`,

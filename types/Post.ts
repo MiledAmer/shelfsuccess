@@ -5,6 +5,7 @@ export type Post = {
   _id: string;
   _type: "post";
   title: string;
+  description: string; 
   _createdAt: Date;
   slug: string;
   author: Partial<Author>; 
