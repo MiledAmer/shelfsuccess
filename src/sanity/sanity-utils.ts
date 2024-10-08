@@ -36,19 +36,32 @@ export async function getPost(slug: string): Promise<Post> {
   );
 }
 
-
+export async function getRelatedPosts(
+  categoryIds: string[],
+  currentPostId: string,
+): Promise<Partial<Post>[]> {
+  return await client.fetch(
+    groq`*[_type == "post" && _id != $currentPostId && count(categories[@._ref in $categoryIds]) > 0] | order(_createdAt desc)[0...3]{
+      _id,
+      title,
+      slug,
+      "mainImage": mainImage.asset->url,
+      publishedAt
+    }`,
+    { categoryIds, currentPostId },
+  );
+}
 
 const builder: ImageUrlBuilder = imageUrlBuilder(client);
 
-export function urlFor(source: any): ImageUrlBuilder{
+export function urlFor(source: any): ImageUrlBuilder {
   return imageUrlBuilder(client).image(source);
 }
 
 export interface ImageValue {
   asset: {
-    _ref: string; 
+    _ref: string;
     _type: string;
   };
   alt?: string;
 }
-

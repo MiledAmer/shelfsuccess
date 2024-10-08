@@ -9,7 +9,7 @@ export type Post = {
   slug: string;
   author: Partial<Author>; 
   mainImage: string; 
-  categories?: Category[]; 
+  categories: Category[]; 
   publishedAt?: string; 
   body: BlockContent[]; 
 };

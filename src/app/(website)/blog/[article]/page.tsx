@@ -5,6 +5,7 @@ import ArticleSideBar from "./_components/ArticleSideBar";
 import RelatedArticles from "./_components/RelatedArticles";
 import NewsLetterSection from "./_components/NewsLetterSection";
 import { getPost } from "~/sanity/sanity-utils";
+import { Category } from "types/Category";
 
 type propType = {
   article: string;
@@ -23,7 +24,7 @@ export default async function HomePage({ params }: { params: propType }) {
         </div>
       </main>
 
-      <RelatedArticles />
+      <RelatedArticles categories={data.categories} currentId={data._id}/>
 
       <NewsLetterSection />
     </>
