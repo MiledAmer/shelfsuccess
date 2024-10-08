@@ -6,7 +6,7 @@ export type Author = {
       _type: 'slug';           
       current: string;         
     };
-    imageUrl?: string;         
+    image?: string;         
     bio?: Array<BlockContent>; 
   };
   

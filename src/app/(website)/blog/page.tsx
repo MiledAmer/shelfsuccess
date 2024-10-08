@@ -8,6 +8,7 @@ import { Post } from 'types/Post'
 
 export default async function ResponsiveBlogCards() {
   const posts = await getPostsWithoutDetails() as Post[];
+  // console.log(posts);
   
   return (
     <div className="container mx-auto px-4 py-8">

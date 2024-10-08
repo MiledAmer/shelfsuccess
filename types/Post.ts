@@ -5,8 +5,9 @@ export type Post = {
   _id: string;
   _type: "post";
   title: string;
+  _createdAt: Date;
   slug: string;
-  author: Author; 
+  author: Partial<Author>; 
   mainImage?: string; 
   categories?: Category[]; 
   publishedAt?: string; 
