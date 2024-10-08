@@ -1,6 +1,8 @@
 import { groq } from "next-sanity";
 import { Post } from "types/Post";
 import { client } from "~/lib/sanity";
+import imageUrlBuilder from "@sanity/image-url";
+import { ImageUrlBuilder } from "sanity";
 
 export async function getPostsWithoutDetails(): Promise<Partial<Post>[]> {
   return await client.fetch(
@@ -33,3 +35,20 @@ export async function getPost(slug: string): Promise<Post> {
     { slug },
   );
 }
+
+
+
+const builder: ImageUrlBuilder = imageUrlBuilder(client);
+
+export function urlFor(source: any): ImageUrlBuilder{
+  return imageUrlBuilder(client).image(source);
+}
+
+export interface ImageValue {
+  asset: {
+    _ref: string; 
+    _type: string;
+  };
+  alt?: string;
+}
+

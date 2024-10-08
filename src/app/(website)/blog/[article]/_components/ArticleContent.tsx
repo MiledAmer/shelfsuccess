@@ -1,26 +1,10 @@
 import { Post } from "types/Post";
 import { format } from "date-fns";
 import { PortableText } from "@portabletext/react";
-import imageUrlBuilder from "@sanity/image-url";
-import client from "~/sanity/client";
-import { ImageUrlBuilder } from "sanity";
+import { ImageValue, urlFor } from "~/sanity/sanity-utils";
 
 
-
-const builder: ImageUrlBuilder = imageUrlBuilder(client);
-
-function urlFor(source: any): ImageUrlBuilder{
-  return imageUrlBuilder(client).image(source);
-}
-
-interface ImageValue {
-  asset: {
-    _ref: string; // Reference to the image asset
-    _type: string; // Type of the asset (should be 'reference')
-  };
-  alt?: string; // Optional alt text
-}
-const ptComponents = {
+export const ptComponents = {
   types: {
     image: ({ value }: { value: ImageValue }) => {
       // Check if the value and its asset reference are valid
@@ -36,7 +20,6 @@ const ptComponents = {
         .fit("max")
         .auto("format")
         .toString();
-      console.log("Generated image URL:", imageUrl);
 
       return (
         <img
@@ -48,6 +31,7 @@ const ptComponents = {
     },
   },
 };
+
 
 export default function ArticleContent({ data }: { data: Post }) {
   console.log("the content of the post:", data);
