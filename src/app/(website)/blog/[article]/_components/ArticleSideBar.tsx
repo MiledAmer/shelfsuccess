@@ -1,4 +1,8 @@
-export default function ArticleSideBar() {
+import { format } from "date-fns";
+import { getLatestPosts } from "~/sanity/sanity-utils";
+
+export default async function ArticleSideBar() {
+  const latestPosts = await getLatestPosts();
   return (
     <aside className="hidden xl:block" aria-labelledby="sidebar-label">
       <div className="sticky top-6 xl:w-[336px]">
@@ -26,75 +30,33 @@ export default function ArticleSideBar() {
           <h4 className="mb-4 text-sm font-bold uppercase text-gray-900 dark:text-white">
             Latest news
           </h4>
-          <div className="mb-6 flex items-center">
-            <a href="#" className="shrink-0">
-              <img
-                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/image-1.png"
-                className="mr-4 h-24 w-24 max-w-full rounded-lg"
-                alt="Image 1"
-              />
-            </a>
-            <div>
-              <h5 className="mb-2 text-lg font-bold leading-tight text-gray-900 dark:text-white">
-                Our first office
-              </h5>
-              <p className="mb-2 text-gray-500 dark:text-gray-400">
-                Over the past year, Volosoft has undergone changes.
-              </p>
-              <a
-                href="#"
-                className="text-primary-600 dark:text-primary-500 inline-flex items-center font-medium underline underline-offset-4 hover:no-underline"
-              >
-                Read in 9 minutes
-              </a>
-            </div>
-          </div>
-          <div className="mb-6 flex items-center">
-            <a href="#" className="shrink-0">
-              <img
-                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/image-2.png"
-                className="mr-4 h-24 w-24 max-w-full rounded-lg"
-                alt="Image 2"
-              />
-            </a>
-            <div>
-              <h5 className="mb-2 text-lg font-bold leading-tight text-gray-900 dark:text-white">
-                Enterprise Design tips
-              </h5>
-              <p className="mb-2 text-gray-500 dark:text-gray-400">
-                Over the past year, Volosoft has undergone changes.
-              </p>
-              <a
-                href="#"
-                className="text-primary-600 dark:text-primary-500 inline-flex items-center font-medium underline underline-offset-4 hover:no-underline"
-              >
-                Read in 14 minutes
-              </a>
-            </div>
-          </div>
-          <div className="mb-6 flex items-center">
-            <a href="#" className="shrink-0">
-              <img
-                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/image-3.png"
-                className="mr-4 h-24 w-24 max-w-full rounded-lg"
-                alt="Image 3"
-              />
-            </a>
-            <div>
-              <h5 className="mb-2 text-lg font-bold leading-tight text-gray-900 dark:text-white">
-                Partnered up with Google
-              </h5>
-              <p className="mb-2 text-gray-500 dark:text-gray-400">
-                Over the past year, Volosoft has undergone changes.
-              </p>
-              <a
-                href="#"
-                className="text-primary-600 dark:text-primary-500 inline-flex items-center font-medium underline underline-offset-4 hover:no-underline"
-              >
-                Read in 9 minutes
-              </a>
-            </div>
-          </div>
+          {latestPosts &&
+            latestPosts.map((post) => (
+              <div className="mb-6 flex items-center">
+                <a href="#" className="shrink-0">
+                  <img
+                    src={post.mainImage}
+                    className="mr-4 h-24 w-24 max-w-full rounded-lg"
+                    alt="Image 1"
+                  />
+                </a>
+                <div>
+                  <h5 className="mb-2 text-lg font-bold leading-tight text-gray-900 dark:text-white">
+                    {post.title}
+                  </h5>
+                  <p className="mb-2 text-gray-500 dark:text-gray-400">
+                    published at: <br />
+                    {format(post.publishedAt as string, "MMMM dd, yyyy")}
+                  </p>
+                  <a
+                    href={post.slug}
+                    className="text-primary-600 dark:text-primary-500 inline-flex items-center font-medium underline underline-offset-4 hover:no-underline"
+                  >
+                    Read in 9 minutes
+                  </a>
+                </div>
+              </div>
+            ))}
         </div>
         <div>
           <a

@@ -44,11 +44,24 @@ export async function getRelatedPosts(
     groq`*[_type == "post" && _id != $currentPostId && count(categories[@._ref in $categoryIds]) > 0] | order(_createdAt desc)[0...3]{
       _id,
       title,
-      slug,
+      "slug": slug.current,
       "mainImage": mainImage.asset->url,
       publishedAt
     }`,
     { categoryIds, currentPostId },
+  );
+}
+
+export async function getLatestPosts(limit = 3): Promise<Partial<Post>[]> {
+  return await client.fetch(
+    groq`*[_type == "post"] | order(publishedAt desc)[0...$limit] {
+      _id,
+      title,
+      "slug": slug.current,
+      "mainImage": mainImage.asset->url,
+      publishedAt
+    }`,
+    { limit },
   );
 }
 

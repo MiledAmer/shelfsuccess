@@ -11,7 +11,6 @@ export default async function RelatedArticles({
 }) {
   const categoryIds = categories.map((category: any) => category._id);
   const relatedPosts = await getRelatedPosts(categoryIds, currentId);
-  console.log("related posts:", relatedPosts);
 
   return (
     <aside
