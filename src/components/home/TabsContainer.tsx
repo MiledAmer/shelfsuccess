@@ -25,6 +25,7 @@ const TabsContainer = ({
       <div className="flex overflow-x-auto gap-4">
         <Button
           variant="outline"
+          
           onClick={() => {
             selectCategory("")
           }}
@@ -35,6 +36,7 @@ const TabsContainer = ({
           <Button
             key={category.slug}
             variant="outline"
+            className={currentCategory === category.slug ? "bg-primary text-white" : ""}
             onClick={() => {
               selectCategory(category.slug);
             }}
