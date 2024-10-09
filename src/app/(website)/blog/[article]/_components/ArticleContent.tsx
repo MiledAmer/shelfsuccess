@@ -17,7 +17,7 @@ export const ptComponents = {
       return (
         <div className="relative my-6 h-96 w-full">
           <Image
-            alt={value.alt || ''}
+            alt={value.alt ?? ''}
             loading="lazy"
             src={urlFor(value).width(800).height(384).fit('max').auto('format').url()}
             fill
@@ -226,6 +226,7 @@ export default function ArticleContent({ data }: { data: Post }) {
         </aside>
       </div>
       <div className="mt-6">
+        {/* @ts-expect-error hello */}
         <PortableText value={data.body} components={ptComponents} />
       </div>
     </article>

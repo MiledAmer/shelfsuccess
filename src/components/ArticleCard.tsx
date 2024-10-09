@@ -22,7 +22,7 @@ export default function ArticleCard({ post }: { post: Partial<Post> }) {
       <h2 className="mb-2 md:text-xl font-bold leading-tight text-gray-900 dark:text-white">
         <a href={`/blog/${post.slug}`}>{post.title}</a>
       </h2>
-      <p className="mb-4 text-sm md:text-base text-gray-500 dark:text-gray-400">
+      <p className="mb-4 line-clamp-3 text-sm md:text-base text-gray-500 dark:text-gray-400">
        {post.description}
       </p>
       <a

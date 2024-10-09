@@ -1,12 +1,15 @@
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+
 export default function NewsLetterSection() {
   return (
     <section className="bg-gray-50 dark:bg-gray-800">
       <div className="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
         <div className="mx-auto max-w-screen-md sm:text-center">
-          <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
+          <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
             Sign up for our newsletter
           </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-gray-500 sm:text-xl md:mb-12 dark:text-gray-400">
+          <p className="mx-auto mb-8 max-w-2xl text-gray-500 dark:text-gray-400 sm:text-xl md:mb-12">
             Stay up to date with the roadmap progress, announcements and
             exclusive discounts feel free to sign up with your email.
           </p>
@@ -28,20 +31,20 @@ export default function NewsLetterSection() {
                     <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
                   </svg>
                 </div>
-                <input
-                  className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-white p-3 pl-9 text-sm text-gray-900 sm:rounded-none sm:rounded-l-lg dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                <Input
+                  className="block w-full rounded-lg border border-gray-300 bg-white p-3 pl-9 text-sm sm:rounded-none sm:rounded-l-lg"
                   placeholder="Enter your email"
                   type="email"
                   id="email"
                 />
               </div>
               <div>
-                <button
+                <Button
                   type="submit"
-                  className="bg-primary-700 border-primary-600 hover:bg-primary-800 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full cursor-pointer rounded-lg border px-5 py-3 text-center text-sm font-medium text-white focus:ring-4 sm:rounded-none sm:rounded-r-lg"
+                   className=" rounded-lg sm:rounded-none sm:rounded-r-lg"
                 >
                   Subscribe
-                </button>
+                </Button>
               </div>
             </div>
             <div className="newsletter-form-footer mx-auto max-w-screen-sm text-left text-sm text-gray-500 dark:text-gray-300">

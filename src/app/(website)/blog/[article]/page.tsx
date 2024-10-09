@@ -24,7 +24,7 @@ export default async function HomePage({ params }: { params: propType }) {
         </div>
       </main>
 
-      <RelatedArticles categories={data.categories} currentId={data._id} />
+      {/* <RelatedArticles categories={data.categories} currentId={data._id} /> */}
 
       <NewsLetterSection />
     </>

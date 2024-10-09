@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { Book, Menu, X } from 'lucide-react'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -11,7 +11,8 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
           <div className="flex justify-start lg:w-0 lg:flex-1">
-            <Link href="/" className="text-2xl font-bold text-primary">
+            <Link href="/" className="text-xl font-bold flex items-center text-primary">
+            {/* <Book className='size-5 ml-1'/> */}
               ShelfSuccess
             </Link>
           </div>

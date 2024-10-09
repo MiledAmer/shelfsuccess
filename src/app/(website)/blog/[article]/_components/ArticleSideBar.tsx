@@ -10,6 +10,7 @@ export default async function ArticleSideBar({
   nextPost: Partial<Post> | null;
   latestPosts: Partial<Post>[];
 }) {
+  console.log("nextPost", nextPost)
   return (
     <aside className="hidden xl:block" aria-labelledby="sidebar-label">
       <div className="sticky top-6 xl:w-[336px]">
