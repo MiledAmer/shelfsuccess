@@ -2,52 +2,86 @@ import { Post } from "types/Post";
 import { format } from "date-fns";
 import { PortableText } from "@portabletext/react";
 import { ImageValue, urlFor } from "~/sanity/sanity-utils";
+import Image from "next/image";
+import Link from "next/link";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL; 
 
 export const ptComponents = {
   types: {
     image: ({ value }: { value: ImageValue }) => {
-      // Check if the value and its asset reference are valid
       if (!value?.asset?._ref) {
-        console.error("Invalid image value:", value);
         return null;
       }
 
-      // Generate the image URL and log it for debugging
-      const imageUrl = urlFor(value)
-        .width(320)
-        .height(240)
-        .fit("max")
-        .auto("format")
-        .toString();
-
       return (
-        <img
-          alt={value.alt || " "}
-          loading="lazy"
-          src={imageUrl} // Make sure this is a valid URL
-        />
+        <div className="relative my-6 h-96 w-full">
+          <Image
+            alt={value.alt || ''}
+            loading="lazy"
+            src={urlFor(value).width(800).height(384).fit('max').auto('format').url()}
+            fill
+            className="object-contain"
+            quality={90}
+          />
+        </div>
       );
     },
   },
   block: {
-    h1: ({ children }: any) => (
-      <h1 className="text-4xl font-bold">{children}</h1>
+    h1: ({ children }: { children: React.ReactNode }) => (
+      <h1 className="my-4 text-4xl font-bold tracking-tight">{children}</h1>
     ),
-    h2: ({ children }: any) => (
-      <h2 className="text-3xl font-semibold">{children}</h2>
+    h2: ({ children }: { children: React.ReactNode }) => (
+      <h2 className="my-4 text-3xl font-semibold tracking-tight">{children}</h2>
     ),
-    h3: ({ children }: any) => (
-      <h3 className="text-2xl font-medium">{children}</h3>
+    h3: ({ children }: { children: React.ReactNode }) => (
+      <h3 className="my-4 text-2xl font-medium tracking-tight">{children}</h3>
     ),
-    h4: ({ children }: any) => (
-      <h4 className="text-xl font-medium">{children}</h4>
+    h4: ({ children }: { children: React.ReactNode }) => (
+      <h4 className="my-4 text-xl font-medium tracking-tight">{children}</h4>
     ),
-    blockquote: ({ children }: any) => (
-      <blockquote className="border-l-4 pl-4 italic text-gray-600">
+    blockquote: ({ children }: { children: React.ReactNode }) => (
+      <blockquote className="my-6 border-l-4 border-gray-200 pl-4 italic text-gray-600 dark:border-gray-700 dark:text-gray-400">
         {children}
       </blockquote>
     ),
-    normal: ({ children }: any) => <p className="text-base">{children}</p>, // Customize 'p' if needed
+    normal: ({ children }: { children: React.ReactNode }) => (
+      <p className="my-4 leading-7">{children}</p>
+    ),
+  },
+  list: {
+    bullet: ({ children }: { children: React.ReactNode }) => (
+      <ul className="my-6 ml-6 list-disc space-y-2">{children}</ul>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }: { children: React.ReactNode }) => (
+      <li className="leading-7">{children}</li>
+    ),
+  },
+  marks: {
+    strong: ({ children }: { children: React.ReactNode }) => (
+      <strong className="font-semibold">{children}</strong>
+    ),
+    em: ({ children }: { children: React.ReactNode }) => (
+      <em className="italic">{children}</em>
+    ),
+    link: ({ children, value }: { children: React.ReactNode; value: { href: string } }) => {
+      const rel = !value.href.startsWith('/') ? 'noopener noreferrer' : undefined;
+      const target = !value.href.startsWith('/') ? '_blank' : undefined;
+      
+      return (
+        <Link
+          href={value.href}
+          rel={rel}
+          target={target}
+          className="underline decoration-primary underline-offset-4 transition-colors hover:text-primary"
+        >
+          {children}
+        </Link>
+      );
+    },
   },
 };
 
@@ -68,20 +102,27 @@ export default function ArticleContent({ data }: { data: Post }) {
           <span className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-400"></span>
           <span>
             <time
-              className="font-normal uppercase text-gray-500 dark:text-gray-400"
-              dateTime="2022-03-08" // note that it's camelCase in JSX
-              title="August 3rd, 2022"
+              className="text-xs font-normal uppercase text-gray-500 dark:text-gray-400"
+              dateTime={data._createdAt.toString()}
+              title={data._createdAt.toString()}
             >
-              {format(data._createdAt, "MMMM dd, yyyy")}
+              {/* August 3, 2022, 2:20am EDT */}
+              {format(data._createdAt, "MMMM d, yyyy, h:mm a")}
             </time>
+          </span>
+          <span className="h-2 w-2 rounded-full bg-gray-300 dark:bg-gray-400"></span>
+          <span className="text-xs text-gray-500 dark:text-gray-400">
+            {data.readTime} min read
           </span>
         </div>
         <aside aria-label="Share social media">
           <div className="not-format">
-            <button
+            <a
               data-tooltip-target="tooltip-facebook"
               className="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-50 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              type="button"
+         
+              href={`https://www.facebook.com/sharer/sharer.php?u=${siteUrl}/blog/${data.slug}`}
+              target="_blank"
             >
               <svg
                 className="h-5 w-5 text-gray-500 dark:text-gray-400"
@@ -91,12 +132,12 @@ export default function ArticleContent({ data }: { data: Post }) {
                 viewBox="0 0 8 19"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
-            </button>
+            </a>
             <div
               id="tooltip-facebook"
               role="tooltip"
@@ -106,10 +147,12 @@ export default function ArticleContent({ data }: { data: Post }) {
               <div className="tooltip-arrow" data-popper-arrow></div>
             </div>
 
-            <button
+            <a
               data-tooltip-target="tooltip-twitter"
               className="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-50 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              type="button"
+              
+              href={`https://www.twitter.com/share?url=${siteUrl}/blog/${data.slug}`}
+              target="_blank"
             >
               <svg
                 className="h-5 w-5 text-gray-500 dark:text-gray-400"
@@ -123,7 +166,7 @@ export default function ArticleContent({ data }: { data: Post }) {
                   d="M12.186 8.672 18.743.947h-2.927l-5.005 5.9-4.44-5.9H0l7.434 9.876-6.986 8.23h2.927l5.434-6.4 4.82 6.4H20L12.186 8.672Zm-2.267 2.671L8.544 9.515 3.2 2.42h2.2l4.312 5.719 1.375 1.828 5.731 7.613h-2.2l-4.699-6.237Z"
                 />
               </svg>
-            </button>
+            </a>
             <div
               id="tooltip-twitter"
               role="tooltip"
@@ -133,10 +176,11 @@ export default function ArticleContent({ data }: { data: Post }) {
               <div className="tooltip-arrow" data-popper-arrow></div>
             </div>
 
-            <button
+            <a
               data-tooltip-target="tooltip-reddit"
               className="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-50 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              type="button"
+              href={`https://www.reddit.com/submit?url=${siteUrl}/blog/${data.slug}`}
+              target="_blank"
             >
               <svg
                 className="h-5 w-5 text-gray-500 dark:text-gray-400"
@@ -144,6 +188,7 @@ export default function ArticleContent({ data }: { data: Post }) {
                 viewBox="0 0 18 18"
                 fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg"
+
               >
                 <g clipPath="url(#clip0_13676_82300)">
                   <path d="M9 18C13.9706 18 18 13.9706 18 9C18 4.02944 13.9706 0 9 0C4.02944 0 0 4.02944 0 9C0 13.9706 4.02944 18 9 18Z" />
@@ -158,7 +203,7 @@ export default function ArticleContent({ data }: { data: Post }) {
                   </clipPath>
                 </defs>
               </svg>
-            </button>
+            </a>
             <div
               id="tooltip-reddit"
               role="tooltip"
@@ -168,57 +213,7 @@ export default function ArticleContent({ data }: { data: Post }) {
               <div className="tooltip-arrow" data-popper-arrow></div>
             </div>
 
-            <button
-              data-tooltip-target="tooltip-link"
-              className="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-50 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              type="button"
-            >
-              <svg
-                className="h-5 w-5 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 19 19"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M11.013 7.962a3.519 3.519 0 0 0-4.975 0l-3.554 3.554a3.518 3.518 0 0 0 4.975 4.975l.461-.46m-.461-4.515a3.518 3.518 0 0 0 4.975 0l3.553-3.554a3.518 3.518 0 0 0-4.974-4.975L10.3 3.7"
-                />
-              </svg>
-            </button>
-            <div
-              id="tooltip-link"
-              role="tooltip"
-              className="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
-            >
-              Share link
-              <div className="tooltip-arrow" data-popper-arrow></div>
-            </div>
-
-            <button
-              data-tooltip-target="tooltip-save"
-              className="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-50 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              type="button"
-            >
-              <svg
-                className="h-5 w-5 text-gray-500 dark:text-gray-400"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 20"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m13 19-6-5-6 5V2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17Z"
-                />
-              </svg>
-            </button>
+            
             <div
               id="tooltip-save"
               role="tooltip"
@@ -230,7 +225,9 @@ export default function ArticleContent({ data }: { data: Post }) {
           </div>
         </aside>
       </div>
-      <PortableText value={data.body} components={ptComponents} />
+      <div className="mt-6">
+        <PortableText value={data.body} components={ptComponents} />
+      </div>
     </article>
   );
 }

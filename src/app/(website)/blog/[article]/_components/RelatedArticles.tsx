@@ -1,5 +1,5 @@
 import { Category } from "types/Category";
-import ArticleCard from "./ArticleCard";
+import ArticleCard from "../../../../../components/ArticleCard";
 import { getRelatedPosts } from "~/sanity/sanity-utils";
 
 export default async function RelatedArticles({

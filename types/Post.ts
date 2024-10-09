@@ -8,6 +8,7 @@ export type Post = {
   description: string; 
   _createdAt: Date;
   slug: string;
+  readTime: number;
   author: Partial<Author>; 
   mainImage: string; 
   categories: Category[]; 
