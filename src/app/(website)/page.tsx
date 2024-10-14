@@ -5,7 +5,7 @@ import { Button } from "~/components/ui/button"
 import { getCategories, getPostsWithoutDetails } from '~/sanity/sanity-utils'
 import { Post } from 'types/Post'
 import { Category } from 'types/Category'
-import Hero from '~/components/home/hero'
+import Hero from '~/components/home/Hero'
 import TabsContainer from '~/components/home/TabsContainer'
 
 export const metadata = {

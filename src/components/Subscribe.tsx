@@ -6,8 +6,6 @@ import { Mail } from "lucide-react";
 import { subscribeToNewsletter } from "~/server/subscribe-to-newsletter.server";
 import { toast } from "sonner";
 
-const PUBLICATION_ID = process.env.NEXT_PUBLIC_BEEHIIV_PUBLICATION_ID;
-
 const Subscribe = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleSubmit = async (formData: FormData) => {
@@ -15,22 +13,24 @@ const Subscribe = () => {
     const email = formData.get("email");
     try {
       const response = await subscribeToNewsletter(email as string);
-      console.log(response);
       if (response.ok) {
         toast.success("You have been subscribed to the newsletter");
+        setIsSubmitting(false);
+        formData.set("email", "");
       } else {
         toast.error("Failed to subscribe");
+        setIsSubmitting(false);
       }
     } catch (error) {
       toast.error("Failed to subscribe");
       console.error(error);
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
   return (
-    <form action={handleSubmit} className="">
-      <div className="mb-3 flex items-center">
-        <div className="relative mr-3 w-auto">
+    <form action={handleSubmit} className="w-full">
+      <div className="mb-3 flex w-full items-center">
+        <div className="relative mr-3 w-full">
           <label
             htmlFor="email"
             className="mb-2 hidden text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -41,7 +41,7 @@ const Subscribe = () => {
             <Mail className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           </div>
           <Input
-            className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 md:w-96"
+            className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 "
             placeholder="Enter your email"
             type="email"
             name="email"
@@ -50,7 +50,7 @@ const Subscribe = () => {
         </div>
         <div>
           <Button variant="outline" className="bg-primary text-white">
-            {isSubmitting ? "Submitting..." : "Try for free"}
+            {isSubmitting ? "Submitting..." : "Subscribe"}
           </Button>
         </div>
       </div>

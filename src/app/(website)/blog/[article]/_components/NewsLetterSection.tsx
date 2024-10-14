@@ -1,3 +1,4 @@
+import Subscribe from "~/components/Subscribe";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 
@@ -13,9 +14,11 @@ export default function NewsLetterSection() {
             Stay up to date with the roadmap progress, announcements and
             exclusive discounts feel free to sign up with your email.
           </p>
-          <form action="#">
-            <div className="mx-auto mb-3 max-w-screen-sm items-center space-y-4 sm:flex sm:space-y-0">
-              <div className="relative w-full">
+          <div className="mx-auto  max-w-screen-sm items-center space-y-4 sm:flex sm:space-y-0">
+            <Subscribe />
+          </div>
+          {/* >
+            <div className="relative w-full">
                 <label className="mb-2 hidden text-sm font-medium text-gray-900 dark:text-gray-300">
                   Email address
                 </label>
@@ -46,7 +49,7 @@ export default function NewsLetterSection() {
                   Subscribe
                 </Button>
               </div>
-            </div>
+            </div> */}
             <div className="newsletter-form-footer mx-auto max-w-screen-sm text-left text-sm text-gray-500 dark:text-gray-300">
               We care about the protection of your data.{" "}
               <a
@@ -57,7 +60,7 @@ export default function NewsLetterSection() {
               </a>
               .
             </div>
-          </form>
+          
         </div>
       </div>
     </section>

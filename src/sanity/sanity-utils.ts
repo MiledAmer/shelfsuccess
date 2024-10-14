@@ -156,6 +156,7 @@ export async function createMessage(data: Contact): Promise<Contact> {
 const builder: ImageUrlBuilder = imageUrlBuilder(client);
 
 export function urlFor(source: any): ImageUrlBuilder {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return imageUrlBuilder(client).image(source);
 }
 

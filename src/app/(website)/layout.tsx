@@ -5,6 +5,7 @@ import { type Metadata } from "next";
 import Footer from "~/components/Footer";
 import Header from "~/components/Header";
 import Head from "next/head";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -26,6 +27,7 @@ export default function RootLayout({
         </Head>
         <Header />
         {children}
+        <Toaster richColors position="top-right" />
         <Footer />
       </body>
     </html>
