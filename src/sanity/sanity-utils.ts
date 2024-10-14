@@ -5,12 +5,13 @@ import imageUrlBuilder from "@sanity/image-url";
 import { ImageUrlBuilder } from "sanity";
 import { revalidatePath } from "next/cache";
 import { Category } from "types/Category";
+import { Contact } from "types/Contact";
 
 export async function getPostsWithoutDetails(
   category?: string,
 ): Promise<Partial<Post>[]> {
   let posts: Partial<Post>[] = [];
-  
+
   if (category) {
     posts = await client.fetch(
       groq`*[_type == "post" && $category in categories[]->slug.current]{
@@ -27,7 +28,7 @@ export async function getPostsWithoutDetails(
           "slug": slug.current
         }
       }`,
-      { category }
+      { category },
     );
   } else {
     posts = await client.fetch(
@@ -44,7 +45,7 @@ export async function getPostsWithoutDetails(
           title, 
           "slug": slug.current
         }
-      }`
+      }`,
     );
   }
 
@@ -73,7 +74,9 @@ export async function getPost(slug: string): Promise<Post> {
     { slug },
   );
 }
-export const getNextPost = async (slug: string): Promise<Partial<Post> | null> => {
+export const getNextPost = async (
+  slug: string,
+): Promise<Partial<Post> | null> => {
   const post = await getPost(slug);
   const nextPost = await client.fetch<{ slug: string } | null>(
     groq`*[_type == "post" && _createdAt > $publishedAt] | order(_createdAt asc)[0]{
@@ -89,8 +92,8 @@ export const getNextPost = async (slug: string): Promise<Partial<Post> | null> =
       readTime
     }`,
     { publishedAt: post.publishedAt },
-  ) 
-  return nextPost
+  );
+  return nextPost;
 };
 
 export async function getRelatedPosts(
@@ -133,6 +136,21 @@ export async function getCategories(): Promise<Category[]> {
       "slug": slug.current,
     }`,
   );
+}
+
+export async function createMessage(data: Contact): Promise<Contact> {
+  try {
+    const document = {
+      _type: "message",
+      ...data,
+    };
+
+    const response: Contact = await client.create<Contact>(document);
+    return response;
+  } catch (error: any) {
+    console.error("Error creating message:", error.message);
+    throw error;
+  }
 }
 
 const builder: ImageUrlBuilder = imageUrlBuilder(client);

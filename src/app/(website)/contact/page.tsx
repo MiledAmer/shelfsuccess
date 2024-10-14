@@ -24,6 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form";
+import { createMessage } from "~/sanity/sanity-utils";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -51,16 +52,15 @@ export default function ContactForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    // Simulate API call
+    createMessage(values);
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setIsSubmitting(false);
-    console.log(values);
     form.reset();
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <Card className="w-full max-w-md p-6 bg-white shadow-lg rounded-lg">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+      <Card className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
         <CardHeader>
           <CardTitle className="text-center text-2xl font-semibold">
             Contact Me

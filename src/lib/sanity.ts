@@ -4,4 +4,5 @@ export const client = createClient({
   projectId,
   apiVersion,
   dataset,
+  token: process.env.NEXT_READ_WRITE_SANITY,
 });
