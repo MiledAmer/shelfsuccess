@@ -22,8 +22,13 @@ export default async function RelatedArticles({
           Related articles
         </h2>
         <div className="grid gap-6 md:grid-cols-2 lg:gap-12">
-          {relatedPosts &&
-            relatedPosts.map((post) => <ArticleCard post={post} />)}
+          {relatedPosts ? (
+            relatedPosts.map((post) => (
+              <ArticleCard key={post._id} post={post} />
+            ))
+          ) : (
+            <div>No related posts</div>
+          )}
         </div>
       </div>
     </aside>
