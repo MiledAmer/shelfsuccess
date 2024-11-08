@@ -1,4 +1,4 @@
-import { Rule } from "@sanity/types";
+import { type Rule } from "@sanity/types";
 
 const messageType = {
   name: "message",
