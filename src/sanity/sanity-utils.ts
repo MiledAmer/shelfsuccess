@@ -54,7 +54,7 @@ export async function getPostsWithoutDetails(
 }
 
 export async function getPost(slug: string): Promise<Post> {
-  return await client.fetch(
+  const post =  await client.fetch(
     groq`*[_type =="post"  && slug.current == $slug][0]{
       _id, 
       _createdAt, 
@@ -73,6 +73,8 @@ export async function getPost(slug: string): Promise<Post> {
     }`,
     { slug },
   );
+  revalidatePath(`/blog/${slug}`);
+  return post;
 }
 export const getNextPost = async (
   slug: string,
